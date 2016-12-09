@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui \
+
+CONFIG += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,9 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    oblastcrtanja.cpp
+    oblastcrtanja.cpp \
+    algoritam.cpp
 
 HEADERS  += mainwindow.h \
-    oblastcrtanja.h
+    oblastcrtanja.h \
+    algoritam.h
 
 FORMS    += mainwindow.ui

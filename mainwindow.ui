@@ -21,9 +21,9 @@
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="_2">
         <property name="sizeConstraint">
-         <enum>QLayout::SetMaximumSize</enum>
+         <enum>QLayout::SetFixedSize</enum>
         </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -260,14 +260,32 @@
          </layout>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="text">
+             <string>Ucitaj fajl</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Ucitaj novu duz</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelaUneteDuzi">
           <property name="text">
-           <string>Ucitaj novu duz</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -280,13 +298,6 @@
           </property>
           <property name="text">
            <string>Ocisti duzi</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="labelaUneteDuzi">
-          <property name="text">
-           <string/>
           </property>
          </widget>
         </item>
@@ -316,6 +327,15 @@
         </item>
         <item>
          <widget class="QTextBrowser" name="textBrowser">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -330,6 +350,12 @@
     </item>
     <item row="0" column="1">
      <widget class="OblastCrtanja" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
         <width>800</width>
@@ -339,6 +365,7 @@
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
+      <zorder></zorder>
      </widget>
     </item>
    </layout>
@@ -358,8 +385,6 @@
   <tabstop>lineEdit_2</tabstop>
   <tabstop>lineEdit_3</tabstop>
   <tabstop>lineEdit_4</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_3</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>textBrowser</tabstop>
  </tabstops>

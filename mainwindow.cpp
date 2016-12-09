@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include <iostream>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,4 +46,29 @@ void MainWindow::on_pushButton_3_clicked() //ocisti duzi
     ui->widget->ocistiSve();
     ui->labelaUneteDuzi->setText("Duzi su ukonjene");
     ui->widget->update();
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"));
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::warning(this, "Ucitavanje podataka o studentu", "Ne moze da se otvori datoteka", QMessageBox::Ok);
+    }
+    else
+    {
+        QTextStream t(&file);
+        double a, b, c, d;
+
+        while(true){
+            t >> a >> b >> c >> d;
+            if(a == 0 && b == 0 && c == 0 && d == 0)
+                break;
+            ui->widget->ucitajDuz(a,b,c,d);
+            std::cout << a << b << c << d << std::endl;
+        };
+
+        file.close();
+    }
 }
