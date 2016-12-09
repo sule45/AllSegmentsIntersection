@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1045</width>
-    <height>921</height>
+    <height>944</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,26 +56,23 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit_2">
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
-              <height>35</height>
+              <width>60</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <pointsize>10</pointsize>
              </font>
-            </property>
-            <property name="inputMethodHints">
-             <set>Qt::ImhNone</set>
-            </property>
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
            </widget>
           </item>
@@ -95,23 +92,23 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
-              <height>35</height>
+              <width>60</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <pointsize>10</pointsize>
              </font>
-            </property>
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
            </widget>
           </item>
@@ -176,23 +173,23 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit_4">
+           <widget class="QLineEdit" name="lineEdit_4">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
-              <height>35</height>
+              <width>60</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <pointsize>10</pointsize>
              </font>
-            </property>
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
            </widget>
           </item>
@@ -212,23 +209,23 @@
            </widget>
           </item>
           <item>
-           <widget class="QTextEdit" name="textEdit_3">
+           <widget class="QLineEdit" name="lineEdit_3">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
-              <width>50</width>
-              <height>35</height>
+              <width>60</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <pointsize>13</pointsize>
+              <pointsize>10</pointsize>
              </font>
-            </property>
-            <property name="verticalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
-            </property>
-            <property name="horizontalScrollBarPolicy">
-             <enum>Qt::ScrollBarAlwaysOff</enum>
             </property>
            </widget>
           </item>
@@ -271,6 +268,18 @@
           </property>
           <property name="text">
            <string>Ucitaj novu duz</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Ocisti duzi</string>
           </property>
          </widget>
         </item>
@@ -330,7 +339,6 @@
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
-      <zorder>textBrowser</zorder>
      </widget>
     </item>
    </layout>
@@ -345,6 +353,16 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>lineEdit_3</tabstop>
+  <tabstop>lineEdit_4</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>textBrowser</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -354,8 +372,8 @@
    <slot>ucitajDuz()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>803</x>
-     <y>148</y>
+     <x>1031</x>
+     <y>132</y>
     </hint>
     <hint type="destinationlabel">
      <x>879</x>
@@ -370,8 +388,8 @@
    <slot>odrediPreseke()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>754</x>
-     <y>183</y>
+     <x>1031</x>
+     <y>227</y>
     </hint>
     <hint type="destinationlabel">
      <x>662</x>
