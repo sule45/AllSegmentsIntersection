@@ -1,0 +1,5 @@
+Ucitavanje duzi iz fajla.
+
+Prikazivanje korak po korak, na klik buttona.
+(cuvanje svih stanja algoritma, za moguce prikazivanje korak po korak.)
+odmah izracunati sva stanja, eventualno prvo stanje, i prelaze (diff-ove), a slajderom setati iz stanja u stanje
