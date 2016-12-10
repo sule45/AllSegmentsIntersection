@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->widget, SIGNAL(sigKrajAlgoritma()), this, SLOT(krajAlgoritma()));
+    daLiJeAlgoritamPokrenut = false;
 }
 
 MainWindow::~MainWindow()
@@ -38,6 +40,15 @@ void MainWindow::ucitajDuz()
 
 void MainWindow::odrediPreseke()
 {
+    if(!daLiJeAlgoritamPokrenut){
+        daLiJeAlgoritamPokrenut = true;
+        ui->pushButton_3->setDisabled(true);
+        ui->pushButton_2->setText("sledeci korak");
+        ui->widget->pokerniAlgoritam(false);
+    }
+    else{
+        ui->widget->pokerniAlgoritam(true);
+    }
 
 }
 
@@ -71,4 +82,12 @@ void MainWindow::on_pushButton_4_clicked()
 
         file.close();
     }
+}
+
+void MainWindow::krajAlgoritma()
+{
+    std::cout << "kraj MainWindow" << std::endl;
+    daLiJeAlgoritamPokrenut = false;
+    ui->pushButton_3->setDisabled(false);
+    ui->pushButton_2->setText("Pokreni algoritam");
 }

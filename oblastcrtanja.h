@@ -1,9 +1,45 @@
 #ifndef OBLASTCRTANJA_H
 #define OBLASTCRTANJA_H
 
+#include "algoritam.h"
 #include <QWidget>
 #include <QPainter>
 #include <set>
+
+struct Point;
+struct Duz;
+class Algoritam;
+
+class OblastCrtanja : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit OblastCrtanja(QWidget *parent = 0);
+
+    bool ucitajDuz(double a, double b, double c, double d);
+    void ocistiSve();
+    void iscrtajSliku(QPainter& painter);
+    bool pokerniAlgoritam(bool daLiJeAlgoritamPokrenut); // poziva se iz mainWin kad se trazi sledeci korak
+
+private:
+    void podesiOlovke();
+    void probudiAlgoritam();
+    void spavaj();
+
+public slots:
+    void krajAlgoritma();
+signals:
+    void sigKrajAlgoritma();
+
+protected:
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
+
+private:
+    std::set<Duz> duzi;
+    QPen pen_A, pen_B, pen_presek, pen_aktivnaDuz, pen_susednaDuz, pen_duz, pen_sweep;
+
+    Algoritam* alg;
+};
 
 struct Point {
     Point(){}
@@ -20,32 +56,5 @@ struct Duz {
 
     bool operator < (const Duz& other) const;
 };
-
-class OblastCrtanja : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit OblastCrtanja(QWidget *parent = 0);
-
-    bool ucitajDuz(double a, double b, double c, double d);
-    void ocistiSve();
-    void iscrtajSliku(QPainter& painter);
-
-signals:
-
-public slots:
-
-
-protected:
-    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
-
-private:
-    std::set<Duz> duzi;
-    QPen pen_A, pen_B, pen_presek, pen_aktivnaDuz, pen_susednaDuz, pen_duz, pen_sweep;
-};
-
-
-
-
 
 #endif // OBLASTCRTANJA_H

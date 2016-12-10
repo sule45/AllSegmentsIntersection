@@ -5,33 +5,47 @@
 #include <set>
 #include <map>
 #include "oblastcrtanja.h"
+#include <QMutex>
+#include <QWaitCondition>
 
-struct Event {
-    Event(Point E, Duz d1, Duz d2);
-
-    Point E;
-};
+struct Point;
+struct Duz;
 
 class Algoritam : public QThread
 {
     Q_OBJECT
 public:
-    explicit Algoritam(QObject *parent = 0);
-
-signals:
-
-public slots:
-
-protected:
+    explicit Algoritam(std::set<Duz>& duzi, bool threadMode = true, QObject *parent = 0);
+private:
+    void dodajDogadjaj(); //fali implementacija
+    void probudiCrtaca();
+    void spavaj();
     void run();
+    void obradiDogadjaj(Point P, std::set<Duz>& U);
 
-friend class OblastCrtanja;
+    struct duzStatusComp {
+        bool operator() (const Duz& first, const Duz& second) const;
+        // nije implementirano!
+    };
+signals:
+    void kraj();
 
 private:
+    /*tacka je dogadjaj, a uz to su joj pridruzene duzi koje su sa njom
+     ako neka tacka ima vise od jedne pridruzene duzi, to znaci da je ona
+     presek.*/
     std::map<Point, std::set<Duz> > eventQueue;
-    // tacka je dogadjaj, a uz to su joj pridruzene duzi koje su sa njom
-    // ako neka tacka ima vise od jedne pridruzene duzi, to znaci da je ona
-    // presek.
+    std::set<Duz, duzStatusComp> status;
+
+friend class OblastCrtanja;
+private:
+    QMutex mut;
+    QWaitCondition keyPressed;
+    /* threadMode -> ako je true, onda se spavaj() izvrsava, i
+                     i budi nas drugi proces
+                  -> ako je false, onda f-ja spavaj ne radi nista,
+                     i algoritam se moze koristiti bez prekidanja.*/
+    bool threadMode;
 };
 
 #endif // ALGORITAM_H

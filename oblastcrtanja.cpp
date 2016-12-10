@@ -9,26 +9,24 @@ OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
     setAutoFillBackground(true);
     setPalette(Pal);
 
-    pen_A.setWidth(8);
-    pen_A.setCapStyle(Qt::RoundCap);
-    pen_B.setWidth(8);
-    pen_B.setCapStyle(Qt::RoundCap);
-    pen_presek.setWidth(10);
-    pen_presek.setCapStyle(Qt::RoundCap);
-    pen_aktivnaDuz.setWidth(2);
-    pen_susednaDuz.setWidth(2);
-    pen_duz.setWidthF(1.5);
-    pen_sweep.setWidth(1);
+    podesiOlovke();
+}
 
-    pen_A.setColor(Qt::green);
-    pen_B.setColor(Qt::blue);
-    pen_presek.setColor(Qt::red);
-    pen_aktivnaDuz.setColor(Qt::red);
-    pen_susednaDuz.setColor(Qt::green);
-    pen_duz.setColor(Qt::black);
-    pen_sweep.setColor(Qt::red);
-
-    pen_sweep.setStyle(Qt::DashLine);
+bool OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
+{
+    if(!daLiJeAlgoritamPokrenut){
+        alg = new Algoritam(duzi);
+        connect(alg, SIGNAL(kraj()), this, SLOT(krajAlgoritma()));
+        connect(alg, SIGNAL(finished()), alg, SLOT(deleteLater()));
+        alg->start();
+    }
+    else{
+        probudiAlgoritam();
+        spavaj();
+        std::cout << "crtam" << std::endl;
+    }
+    //privremeno resenje
+    return false;
 }
 
 bool OblastCrtanja::ucitajDuz(double a, double b, double c, double d)
@@ -55,6 +53,54 @@ void OblastCrtanja::iscrtajSliku(QPainter &painter)
         painter.setPen(pen_duz);
         painter.drawLine(it->A.x, it->A.y, it->B.x, it->B.y);
     }
+}
+
+void OblastCrtanja::podesiOlovke()
+{
+    pen_A.setWidth(8);
+    pen_A.setCapStyle(Qt::RoundCap);
+    pen_B.setWidth(8);
+    pen_B.setCapStyle(Qt::RoundCap);
+    pen_presek.setWidth(10);
+    pen_presek.setCapStyle(Qt::RoundCap);
+    pen_aktivnaDuz.setWidth(2);
+    pen_susednaDuz.setWidth(2);
+    pen_duz.setWidthF(1.5);
+    pen_sweep.setWidth(1);
+
+    pen_A.setColor(Qt::green);
+    pen_B.setColor(Qt::blue);
+    pen_presek.setColor(Qt::red);
+    pen_aktivnaDuz.setColor(Qt::red);
+    pen_susednaDuz.setColor(Qt::green);
+    pen_duz.setColor(Qt::black);
+    pen_sweep.setColor(Qt::red);
+
+    pen_sweep.setStyle(Qt::DashLine);
+
+}
+
+void OblastCrtanja::probudiAlgoritam()
+{
+    alg->mut.lock();
+    alg->keyPressed.wakeAll();
+    alg->mut.unlock();
+}
+
+void OblastCrtanja::spavaj()
+{
+    alg->mut.lock();
+    alg->keyPressed.wait(&alg->mut);
+    alg->mut.unlock();
+}
+
+void OblastCrtanja::krajAlgoritma()
+{
+    std::cout << "kraj oblastcrtanja" << std::endl;
+    //duzi.clear();
+    delete alg;
+    emit sigKrajAlgoritma();
+   // paintEvent(NULL);
 }
 
 void OblastCrtanja::paintEvent(QPaintEvent *)

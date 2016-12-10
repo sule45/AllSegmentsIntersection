@@ -1,5 +1,5 @@
-Ucitavanje duzi iz fajla.
-
-Prikazivanje korak po korak, na klik buttona.
 (cuvanje svih stanja algoritma, za moguce prikazivanje korak po korak.)
-odmah izracunati sva stanja, eventualno prvo stanje, i prelaze (diff-ove), a slajderom setati iz stanja u stanje
+i prelaze (diff-ove), i neki log na steku, ili cuvati cela stanja na steku.
+
+kad se porede tacke, operator < definisati tako da je duz manja, ako je first.y(x) + 0.0001 < second.y(x)
+Tako su tacke koje su na baaas malom rastojanju iste, pogotovo sto je double u pitanju.

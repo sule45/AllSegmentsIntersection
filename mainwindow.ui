@@ -365,7 +365,7 @@
       <property name="autoFillBackground">
        <bool>true</bool>
       </property>
-      <zorder></zorder>
+
      </widget>
     </item>
    </layout>

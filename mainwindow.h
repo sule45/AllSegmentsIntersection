@@ -24,8 +24,12 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+public slots:
+    void krajAlgoritma();
+
 private:
     Ui::MainWindow *ui;
+    bool daLiJeAlgoritamPokrenut;
 };
 
 #endif // MAINWINDOW_H
