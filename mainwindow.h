@@ -25,7 +25,7 @@ private slots:
     void on_pushButton_4_clicked();
 
 public slots:
-    void krajAlgoritma();
+    void krajAlgoritma(std::map<Point, std::vector<Duz> > v);
 
 private:
     Ui::MainWindow *ui;

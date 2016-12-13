@@ -29,7 +29,7 @@ private:
 public slots:
     void krajAlgoritma();
 signals:
-    void sigKrajAlgoritma();
+    void sigKrajAlgoritma(std::map<Point, std::vector<Duz> > preseci);
 
 protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
@@ -37,6 +37,7 @@ protected:
 private:
     std::set<Duz> duzi;
     QPen pen_A, pen_B, pen_presek, pen_aktivnaDuz, pen_susednaDuz, pen_duz, pen_sweep;
+    QPen pen_detektovani;
 
     Algoritam* alg;
 };
@@ -46,6 +47,10 @@ struct Point {
     Point(double x, double y):x(x),y(y){}
     double x, y;
 
+    bool operator == (const Point& other) const {
+        return x == other.x && y == other.y;
+    }
+
     bool operator < (const Point& other) const;
 };
 
@@ -53,7 +58,6 @@ struct Duz {
     Duz(Point a, Point b):A(a),B(b){}
     Duz(double a, double b, double c, double d);
     Point A, B;
-
     bool operator < (const Duz& other) const;
 };
 

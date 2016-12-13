@@ -1,5 +1,7 @@
 #include "oblastcrtanja.h"
 #include <iostream>
+#include <algorithm>
+#define EPS 0
 
 OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
 {
@@ -9,6 +11,7 @@ OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
     setAutoFillBackground(true);
     setPalette(Pal);
 
+    alg = NULL;
     podesiOlovke();
 }
 
@@ -23,6 +26,7 @@ bool OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
     else{
         probudiAlgoritam();
         spavaj();
+        update();
         std::cout << "crtam" << std::endl;
     }
     //privremeno resenje
@@ -46,13 +50,42 @@ void OblastCrtanja::ocistiSve()
 void OblastCrtanja::iscrtajSliku(QPainter &painter)
 {
     for(auto it = duzi.begin(); it != duzi.end(); it++){
-        painter.setPen(pen_A);
+
+        if(alg && alg->preseci.find(it->A) != alg->preseci.end())
+            painter.setPen(pen_presek);
+        else if(alg && alg->detektovaniPreseci.find(it->A) != alg->detektovaniPreseci.end())
+            painter.setPen(pen_detektovani);
+        else
+            painter.setPen(pen_A);
         painter.drawPoint(it->A.x,it->A.y);
-        painter.setPen(pen_B);
+
+        if(alg && alg->preseci.find(it->B) != alg->preseci.end())
+            painter.setPen(pen_presek);
+        else if(alg && alg->detektovaniPreseci.find(it->B) != alg->detektovaniPreseci.end())
+            painter.setPen(pen_detektovani);
+        else painter.setPen(pen_B);
         painter.drawPoint(it->B.x,it->B.y);
-        painter.setPen(pen_duz);
+
+        if(alg && alg->noviSusedi.find(*it) != alg->noviSusedi.end())
+            painter.setPen(pen_susednaDuz);
+        else if (alg && alg->status.find(*it) != alg->status.end())
+            painter.setPen(pen_aktivnaDuz);
+        else
+            painter.setPen(pen_duz);
         painter.drawLine(it->A.x, it->A.y, it->B.x, it->B.y);
     }
+    if(alg){
+        for(auto it = alg->preseci.begin(); it != alg->preseci.end(); it++){
+            painter.setPen(pen_presek);
+            painter.drawPoint(it->first.x, it->first.y);
+        }
+        for(auto it = alg->detektovaniPreseci.begin(); it != alg->detektovaniPreseci.end(); ++it){
+            painter.setPen(pen_detektovani);
+            painter.drawPoint(it->x, it->y);
+        }
+    }
+    painter.setPen(pen_sweep);
+    painter.drawLine(0, alg->sweep, 800, alg->sweep);
 }
 
 void OblastCrtanja::podesiOlovke()
@@ -63,6 +96,8 @@ void OblastCrtanja::podesiOlovke()
     pen_B.setCapStyle(Qt::RoundCap);
     pen_presek.setWidth(10);
     pen_presek.setCapStyle(Qt::RoundCap);
+    pen_detektovani.setWidth(9);
+    pen_detektovani.setCapStyle(Qt::RoundCap);
     pen_aktivnaDuz.setWidth(2);
     pen_susednaDuz.setWidth(2);
     pen_duz.setWidthF(1.5);
@@ -70,7 +105,8 @@ void OblastCrtanja::podesiOlovke()
 
     pen_A.setColor(Qt::green);
     pen_B.setColor(Qt::blue);
-    pen_presek.setColor(Qt::red);
+    pen_presek.setColor(Qt::darkMagenta);
+    pen_detektovani.setColor(Qt::darkYellow);
     pen_aktivnaDuz.setColor(Qt::red);
     pen_susednaDuz.setColor(Qt::green);
     pen_duz.setColor(Qt::black);
@@ -98,8 +134,10 @@ void OblastCrtanja::krajAlgoritma()
 {
     std::cout << "kraj oblastcrtanja" << std::endl;
     //duzi.clear();
+    alg->sweep = 0;
+    emit sigKrajAlgoritma(alg->preseci);
     delete alg;
-    emit sigKrajAlgoritma();
+    alg = NULL;
    // paintEvent(NULL);
 }
 
@@ -129,8 +167,8 @@ bool Duz::operator <(const Duz &other) const {
 }
 
 bool Point::operator <(const Point &other) const {
-    if(y < other.y) return true;
-    if(y > other.y) return false;
-    if(x < other.x) return true;
+    if(y + EPS < other.y) return true;
+    if(y > other.y + EPS) return false;
+    if(x + EPS < other.x) return true;
     return false;
 }

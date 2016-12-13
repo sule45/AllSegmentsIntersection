@@ -11,22 +11,30 @@
 struct Point;
 struct Duz;
 
+
 class Algoritam : public QThread
 {
     Q_OBJECT
 public:
     explicit Algoritam(std::set<Duz>& duzi, bool threadMode = true, QObject *parent = 0);
-private:
-    void dodajDogadjaj(); //fali implementacija
-    void probudiCrtaca();
-    void spavaj();
-    void run();
-    void obradiDogadjaj(Point P, std::set<Duz>& U);
 
     struct duzStatusComp {
         bool operator() (const Duz& first, const Duz& second) const;
         // nije implementirano!
     };
+
+
+private:
+    void dodajDogadjaj(); //fali implementacija
+    void probudiCrtaca();
+    void spavaj();
+    void run();
+    void obradiDogadjaj(const Point& P, std::set<Duz>& U);
+    void pronadjiNoviDogadjaj(const Point& P,
+                              const std::set<Duz, duzStatusComp>::iterator& it1,
+                              const std::set<Duz, duzStatusComp>::iterator& it2);
+
+
 signals:
     void kraj();
 
@@ -36,8 +44,15 @@ private:
      presek.*/
     std::map<Point, std::set<Duz> > eventQueue;
     std::set<Duz, duzStatusComp> status;
+    std::map<Point, std::vector<Duz> > preseci;
+    std::set<Point> detektovaniPreseci;
+    std::set<Duz> noviSusedi;
+
+public:
+    static double sweep;
 
 friend class OblastCrtanja;
+friend class duzStatusComp;
 private:
     QMutex mut;
     QWaitCondition keyPressed;

@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->widget, SIGNAL(sigKrajAlgoritma()), this, SLOT(krajAlgoritma()));
+    connect(ui->widget, SIGNAL(sigKrajAlgoritma(std::map<Point,std::vector<Duz> >)), this, SLOT(krajAlgoritma(std::map<Point,std::vector<Duz> >)));
     daLiJeAlgoritamPokrenut = false;
 }
 
@@ -54,6 +54,7 @@ void MainWindow::odrediPreseke()
 
 void MainWindow::on_pushButton_3_clicked() //ocisti duzi
 {
+    ui->textBrowser->setHtml("");
     ui->widget->ocistiSve();
     ui->labelaUneteDuzi->setText("Duzi su ukonjene");
     ui->widget->update();
@@ -61,6 +62,7 @@ void MainWindow::on_pushButton_3_clicked() //ocisti duzi
 
 void MainWindow::on_pushButton_4_clicked()
 {
+    ui->widget->ocistiSve();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"));
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly))
@@ -84,8 +86,20 @@ void MainWindow::on_pushButton_4_clicked()
     }
 }
 
-void MainWindow::krajAlgoritma()
+void MainWindow::krajAlgoritma(std::map<Point,std::vector<Duz> > v)
 {
+    QString html;
+    for(auto it = v.begin(); it != v.end(); it++){
+        html += QString("(%1, %2)<p align=\"right\">").arg(QString::number(it->first.x), QString::number(it->first.y));
+        for(auto it2 = it->second.begin(); it2 != it->second.end(); it2++){
+            html += QString("(%1, %2)->(%3, %4)<br>").arg(QString::number(it2->A.x), QString::number(it2->A.y),
+                                                            QString::number(it2->B.x), QString::number(it2->B.y));
+        }
+        html += "</p>";
+    }
+
+    ui->textBrowser->setHtml(html);
+
     std::cout << "kraj MainWindow" << std::endl;
     daLiJeAlgoritamPokrenut = false;
     ui->pushButton_3->setDisabled(false);
