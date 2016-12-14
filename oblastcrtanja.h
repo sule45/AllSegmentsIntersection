@@ -29,7 +29,7 @@ private:
 public slots:
     void krajAlgoritma();
 signals:
-    void sigKrajAlgoritma(std::map<Point, std::vector<Duz> > preseci);
+    void sigKrajAlgoritma(std::map<Point, std::set<Duz>> preseci);
 
 protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;

@@ -4,9 +4,9 @@
 #include <set>
 #include <map>
 
-#define EPS1 0.00001
-#define EPS2 0.0000001
-#define EPS3 0.000001
+#define EPS1 0.0001
+#define EPS2 0.000001
+#define EPS3 0.00001
 
 double Algoritam::sweep = 0;
 double Algoritam::dogX = 0;
@@ -71,9 +71,9 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
     status.erase(q,p);
 //    std::cout << "posle brisanja: " << status.size() << std::endl;
     if(U.size() + C.size() + L.size() > 1){//prijavi presek
-        preseci[P].insert(preseci[P].end(), L.begin(), L.end());
-        preseci[P].insert(preseci[P].end(), C.begin(), C.end());
-        preseci[P].insert(preseci[P].end(), U.begin(), U.end());
+        preseci[P].insert(L.begin(), L.end());
+        preseci[P].insert(C.begin(), C.end());
+        preseci[P].insert(U.begin(), U.end());
     }
 
     status.insert(C.begin(), C.end());
@@ -117,12 +117,17 @@ void Algoritam::pronadjiNoviDogadjaj(const Point& P,
         noviSusedi.insert(*it1);
         noviSusedi.insert(*it2);
         Point Q;
+//        probudiCrtaca();
+//        spavaj();
         if(intersection(*it1, *it2, &Q)){
             if(P < Q){//P je tacka preseka na kojoj je trenutno sweepline
                 eventQueue[Q];
                 detektovaniPreseci.insert(Q);
+//                probudiCrtaca();
+//                spavaj();
             }
         }
+//        noviSusedi.clear();
     }
 }
 
@@ -177,18 +182,18 @@ bool Algoritam::duzStatusComp::operator()(const Duz &first, const Duz &second) c
         intersection(first, Duz(0, sweep, 1000, sweep), &P);
         intersection(second, Duz(0, sweep, 1000, sweep), &Q);
 
-        if(first.A.y == sweep && first.B.y == sweep){
-            if(Q.x <= dogX)
-                return false;
-            else
-                return true;
-        }
-        if(second.A.y == sweep && second.B.y){
-            if(P.x <= dogX)
-                return true;
-            else
-                return false;
-        }
+//        if(first.A.y == sweep && first.B.y == sweep){
+//            if(Q.x <= dogX)
+//                return false;
+//            else
+//                return true;
+//        }
+//        if(second.A.y == sweep && second.B.y){
+//            if(P.x <= dogX)
+//                return true;
+//            else
+//                return false;
+//        }
 
       /*  if(!b1){
             if(first.B.x > dogX && first.A.x < dogX)
@@ -222,3 +227,6 @@ bool Algoritam::duzStatusComp::operator()(const Duz &first, const Duz &second) c
         if (Q.x < P.x) return false;
         return false;
 }
+
+
+

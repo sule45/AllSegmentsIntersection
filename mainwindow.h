@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "oblastcrtanja.h"
 
+class pointComp;
+
 namespace Ui {
 class MainWindow;
 }
@@ -25,7 +27,7 @@ private slots:
     void on_pushButton_4_clicked();
 
 public slots:
-    void krajAlgoritma(std::map<Point, std::vector<Duz> > v);
+    void krajAlgoritma(std::map<Point, std::set<Duz> > v);
 
 private:
     Ui::MainWindow *ui;

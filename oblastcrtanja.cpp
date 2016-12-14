@@ -173,3 +173,5 @@ bool Point::operator <(const Point &other) const {
     if(x + EPS < other.x) return true;
     return false;
 }
+
+

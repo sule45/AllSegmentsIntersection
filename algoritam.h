@@ -11,7 +11,6 @@
 struct Point;
 struct Duz;
 
-
 class Algoritam : public QThread
 {
     Q_OBJECT
@@ -20,9 +19,7 @@ public:
 
     struct duzStatusComp {
         bool operator() (const Duz& first, const Duz& second) const;
-        // nije implementirano!
     };
-
 
 private:
     void dodajDogadjaj(); //fali implementacija
@@ -44,7 +41,7 @@ private:
      presek.*/
     std::map<Point, std::set<Duz> > eventQueue;
     std::set<Duz, duzStatusComp> status;
-    std::map<Point, std::vector<Duz> > preseci;
+    std::map<Point, std::set<Duz> > preseci;
     std::set<Point> detektovaniPreseci;
     std::set<Duz> noviSusedi;
 

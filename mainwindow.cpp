@@ -5,13 +5,14 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
+#define EPS 0.0001
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->widget, SIGNAL(sigKrajAlgoritma(std::map<Point,std::vector<Duz> >)), this, SLOT(krajAlgoritma(std::map<Point,std::vector<Duz> >)));
+    connect(ui->widget, SIGNAL(sigKrajAlgoritma(std::map<Point,std::set<Duz> >)), this, SLOT(krajAlgoritma(std::map<Point,std::set<Duz> >)));
     daLiJeAlgoritamPokrenut = false;
 }
 
@@ -80,6 +81,12 @@ void MainWindow::on_pushButton_4_clicked()
             t >> a >> b >> c >> d;
             if(a == 0 && b == 0 && c == 0 && d == 0)
                 break;
+            if(b == d){
+                if(a < c)
+                    d += EPS;
+                else
+                    b += EPS;
+            }
             ui->widget->ucitajDuz(a,b,c,d);
             std::cout << a << b << c << d << std::endl;
         };
@@ -88,7 +95,7 @@ void MainWindow::on_pushButton_4_clicked()
     }
 }
 
-void MainWindow::krajAlgoritma(std::map<Point,std::vector<Duz> > v)
+void MainWindow::krajAlgoritma(std::map<Point, std::set<Duz>> v)
 {
     QString html;
     for(auto it = v.begin(); it != v.end(); it++){
