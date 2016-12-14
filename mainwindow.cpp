@@ -49,6 +49,8 @@ void MainWindow::odrediPreseke()
     else{
         ui->widget->pokerniAlgoritam(true);
     }
+//    ui->widget->update();
+//    QCoreApplication::processEvents();
 
 }
 

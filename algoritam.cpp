@@ -1,12 +1,15 @@
 #include "algoritam.h"
 #include <iostream>
 #include <vector>
+#include <set>
+#include <map>
 
 #define EPS1 0.00001
 #define EPS2 0.0000001
 #define EPS3 0.000001
 
 double Algoritam::sweep = 0;
+double Algoritam::dogX = 0;
 
 Algoritam::Algoritam(std::set<Duz>& duzi, bool threadMode, QObject *parent) :
     QThread(parent), threadMode(threadMode)
@@ -27,6 +30,7 @@ void Algoritam::run(){
         auto p = eventQueue.begin();
         eventQueue.erase(p);
         sweep = p->first.y;
+        dogX = p->first.x;
         obradiDogadjaj(p->first, p->second);
 
         //std::cout << "algoritam odradjuje posao " << std::endl;
@@ -168,15 +172,39 @@ bool intersection(Duz a, Duz b, Point* P){
 }
 
 bool Algoritam::duzStatusComp::operator()(const Duz &first, const Duz &second) const {
-        Point P, Q;
+        Point P, Q;        
 
         intersection(first, Duz(0, sweep, 1000, sweep), &P);
         intersection(second, Duz(0, sweep, 1000, sweep), &Q);
 
-        if(first.A.x == 10 && second.A.x == 600){
-            std::cout << "sa" << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
+        if(first.A.y == sweep && first.B.y == sweep){
+            if(Q.x <= dogX)
+                return false;
+            else
+                return true;
+        }
+        if(second.A.y == sweep && second.B.y){
+            if(P.x <= dogX)
+                return true;
+            else
+                return false;
         }
 
+      /*  if(!b1){
+            if(first.B.x > dogX && first.A.x < dogX)
+                return false;
+            else
+                return true;
+        }
+        if(!b2){
+            if(second.A.x < dogX)
+                return true;
+            else
+                return false;
+        }
+        if(first.A.x == 10 && second.A.x == 600){
+            std::cout << "sa" << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
+        }*/
 
         if (P.x < Q.x - EPS3) return true;
         if (Q.x < P.x - EPS3) return false;
@@ -184,9 +212,11 @@ bool Algoritam::duzStatusComp::operator()(const Duz &first, const Duz &second) c
         intersection(first , Duz(0, sweep+EPS2, 1000, sweep+EPS2), &P);
         intersection(second, Duz(0, sweep+EPS2, 1000, sweep+EPS2), &Q);
 
-        if(first.A.x == 10 && second.A.x == 600){
-            std::cout << "sa"  << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
-        }
+
+
+//        if(first.A.x == 10 && second.A.x == 600){
+//            std::cout << "sa"  << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
+//        }
 
         if (P.x < Q.x) return true;
         if (Q.x < P.x) return false;

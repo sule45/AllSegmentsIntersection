@@ -8,6 +8,8 @@ OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
     QPalette Pal(palette());
     Pal.setColor(QPalette::Background, Qt::white);
 
+    setUpdatesEnabled(true);
+
     setAutoFillBackground(true);
     setPalette(Pal);
 
@@ -15,7 +17,7 @@ OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
     podesiOlovke();
 }
 
-bool OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
+void OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
 {
     if(!daLiJeAlgoritamPokrenut){
         alg = new Algoritam(duzi);
@@ -27,10 +29,9 @@ bool OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
         probudiAlgoritam();
         spavaj();
         update();
+       // repaint();
         std::cout << "crtam" << std::endl;
     }
-    //privremeno resenje
-    return false;
 }
 
 bool OblastCrtanja::ucitajDuz(double a, double b, double c, double d)

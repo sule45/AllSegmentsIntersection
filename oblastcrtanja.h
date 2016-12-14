@@ -19,7 +19,7 @@ public:
     bool ucitajDuz(double a, double b, double c, double d);
     void ocistiSve();
     void iscrtajSliku(QPainter& painter);
-    bool pokerniAlgoritam(bool daLiJeAlgoritamPokrenut); // poziva se iz mainWin kad se trazi sledeci korak
+    void pokerniAlgoritam(bool daLiJeAlgoritamPokrenut); // poziva se iz mainWin kad se trazi sledeci korak
 
 private:
     void podesiOlovke();

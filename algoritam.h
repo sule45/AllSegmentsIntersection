@@ -50,7 +50,7 @@ private:
 
 public:
     static double sweep;
-
+    static double dogX;
 friend class OblastCrtanja;
 friend class duzStatusComp;
 private:
