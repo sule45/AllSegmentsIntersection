@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#define EPS 0.0005
+#define EPS 0 //0.0005
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -77,7 +77,7 @@ void MainWindow::on_pushButton_4_clicked()
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly))
     {
-        QMessageBox::warning(this, "Ucitavanje podataka o studentu", "Ne moze da se otvori datoteka", QMessageBox::Ok);
+        QMessageBox::warning(this, "Greska", "Ne moze da se otvori datoteka", QMessageBox::Ok);
     }
     else
     {

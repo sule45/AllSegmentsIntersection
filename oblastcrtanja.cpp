@@ -1,7 +1,7 @@
 #include "oblastcrtanja.h"
 #include <iostream>
 #include <algorithm>
-#define EPS 0
+#define EPS 0  //0.00001
 
 OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
 {

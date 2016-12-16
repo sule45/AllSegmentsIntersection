@@ -21,6 +21,10 @@ public:
         bool operator() (const Duz& first, const Duz& second) const;
     };
 
+    struct poredjenjeDuzi {
+        bool operator() (const Duz& first, const Duz& second) const;
+    };
+
 private:
     void dodajDogadjaj(); //fali implementacija
     void probudiCrtaca();

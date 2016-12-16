@@ -4,9 +4,9 @@
 #include <set>
 #include <map>
 
-#define EPS1 0.0001
+//#define EPS1 0.0001
 #define EPS2 0.000001
-#define EPS3 0.00001
+#define EPS3 0.00000001
 
 double Algoritam::sweep = 0;
 double Algoritam::dogX = 0;
@@ -50,26 +50,39 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
     std::vector<Duz> C,L;
 
     detektovaniPreseci.erase(P);
-
-    auto q = status.lower_bound(Duz(P.x - EPS1, sweep - 1, P.x - EPS1, sweep + 1));
-    auto p = status.upper_bound(Duz(P.x + EPS1, sweep - 1, P.x + EPS1, sweep + 1));
-
-    for(auto it = q; it != p; it++){
-        if(it->B == P){
-            L.push_back(*it);
-            //std::cout << it->B.x << " " << it->B.y << " " << P.x << " "<< P.y << std::endl;
-        }
-        else{
-            C.push_back(*it);
-            //std::cout << it->B.x << " " << it->B.y << " " << P.x << " "<< P.y << std::endl;
+    Duz d(P.x, sweep - 1, P.x, sweep + 1);
+    auto r = status.lower_bound(d);
+//    auto q = status.lower_bound(Duz(P.x - EPS1, sweep - 1, P.x - EPS1, sweep + 1));
+//    auto p = status.upper_bound(Duz(P.x + EPS1, sweep - 1, P.x + EPS1, sweep + 1));
+    auto q = r;
+    auto p = r;
+    poredjenjeDuzi comparatorManje;
+    while(q != status.begin()){
+        q--;
+        if(comparatorManje(*q, d)){
+            q++;
+            break;
         }
     }
 
-    for(auto it = status.begin(); it!=status.end(); it++)
-         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
-//    std::cout << "pre brisanja: " << status.size() << std::endl;
+    while(p != status.end()){
+        if(comparatorManje(d, *p))
+            break;
+        p++;
+    }
+
+    for(auto it = q; it != p; it++){
+        if(it->B == P)
+            L.push_back(*it);
+        else
+            C.push_back(*it);
+    }
+//treba zakomentarisati!
     status.erase(q,p);
-//    std::cout << "posle brisanja: " << status.size() << std::endl;
+
+    for(auto it = status.begin(); it != status.end(); it++)
+         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
+
     if(U.size() + C.size() + L.size() > 1){//prijavi presek
         preseci[P].insert(L.begin(), L.end());
         preseci[P].insert(C.begin(), C.end());
@@ -78,14 +91,23 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
 
     status.insert(C.begin(), C.end());
     status.insert(U.begin(), U.end());
+
+//zakomentarisati
     std::cout << "posle ubacivanja: " << status.size() << std::endl;
-    for(auto it = status.begin(); it!=status.end(); it++)
+    for(auto it = status.begin(); it != status.end(); it++)
          std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
 
 
 
     if(U.size() + C.size() == 0){
-        auto lb = status.lower_bound(Duz(P.x - EPS1, sweep - 1, P.x - EPS1, sweep + 1));
+        auto lb = status.lower_bound(d);
+        while(lb != status.begin()){
+            lb--;
+            if(comparatorManje(*lb, d)){
+                lb++;
+                break;
+            }
+        }
         auto it = lb;
         if(it != status.begin()){
             it--;
@@ -93,8 +115,22 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
         }
     }
     else{
-        auto lb = status.lower_bound(Duz(P.x - EPS1, sweep - 1, P.x - EPS1, sweep + 1));
-        auto ub = status.upper_bound(Duz(P.x + EPS1, sweep - 1, P.x + EPS1, sweep + 1));
+        auto lb = status.lower_bound(d);
+        auto ub = lb;
+
+        while(lb != status.begin()){
+            lb--;
+            if(comparatorManje(*lb, d)){
+                lb++;
+                break;
+            }
+        }
+        while(ub != status.end()){
+            if(comparatorManje(d, *ub))
+                break;
+            ub++;
+        }
+
         auto it1 = lb;
         if(it1 != status.begin()){
             it1--;
@@ -179,54 +215,52 @@ bool intersection(Duz a, Duz b, Point* P){
 bool Algoritam::duzStatusComp::operator()(const Duz &first, const Duz &second) const {
         Point P, Q;        
 
-        intersection(first, Duz(0, sweep, 1000, sweep), &P);
-        intersection(second, Duz(0, sweep, 1000, sweep), &Q);
-
-//        if(first.A.y == sweep && first.B.y == sweep){
-//            if(Q.x <= dogX)
-//                return false;
-//            else
-//                return true;
-//        }
-//        if(second.A.y == sweep && second.B.y){
-//            if(P.x <= dogX)
-//                return true;
-//            else
-//                return false;
-//        }
-
-      /*  if(!b1){
-            if(first.B.x > dogX && first.A.x < dogX)
-                return false;
-            else
+        if(first.A.y == first.B.y){
+            intersection(second, Duz(0, sweep, 1080, sweep), &P);
+            if(dogX < P.x)//vodoravna manja
                 return true;
-        }
-        if(!b2){
-            if(second.A.x < dogX)
-                return true;
-            else
+            if(dogX == P.x)//vodoravna veca
                 return false;
+            return false;//vodoravna veca
         }
-        if(first.A.x == 10 && second.A.x == 600){
-            std::cout << "sa" << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
-        }*/
+        if(second.A.y == second.B.y){
+            intersection(first, Duz(0, sweep, 1080, sweep), &P);
+            if(P.x < dogX)
+                return true;//vodoravna veca
+            if(P.x == dogX)
+                return true; //vodoravna veca
+            return false;// vodoravna manja
+        }
 
+        intersection(first, Duz(0, sweep, 1080, sweep), &P);
+        intersection(second, Duz(0, sweep, 1080, sweep), &Q);
+//EPS2
         if (P.x < Q.x - EPS3) return true;
         if (Q.x < P.x - EPS3) return false;
 
         intersection(first , Duz(0, sweep+EPS2, 1000, sweep+EPS2), &P);
         intersection(second, Duz(0, sweep+EPS2, 1000, sweep+EPS2), &Q);
 
-
-
-//        if(first.A.x == 10 && second.A.x == 600){
-//            std::cout << "sa"  << P.x << " " << P.y << " " << Q.x << " " << Q.y << std::endl;
-//        }
-
         if (P.x < Q.x) return true;
         if (Q.x < P.x) return false;
         return false;
 }
 
+bool Algoritam::poredjenjeDuzi::operator()(const Duz &first, const Duz &second) const
+{
+    Point P, Q;
 
+    if(first.A.y == first.B.y)
+        return true;
+    if(second.A.y == second.B.y)
+        return false;
 
+    intersection(first, Duz(0, sweep, 1080, sweep), &P);
+    intersection(second, Duz(0, sweep, 1080, sweep), &Q);
+
+    if (P.x < Q.x - EPS3)
+        return true;
+    //if (Q.x < P.x - EPS3) return false;
+
+    return false;
+}
