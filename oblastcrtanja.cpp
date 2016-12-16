@@ -38,6 +38,8 @@ bool OblastCrtanja::ucitajDuz(double a, double b, double c, double d)
 {
     auto p = duzi.insert(Duz(a,b,c,d));
     return p.second;
+    //update();
+    //repaint();
 }
 
 void OblastCrtanja::ocistiSve()

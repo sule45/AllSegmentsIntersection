@@ -1,9 +1,2 @@
-(cuvanje svih stanja algoritma, za moguce prikazivanje korak po korak.)
-i prelaze (diff-ove), i neki log na steku, ili cuvati cela stanja na steku.
-
-kad se porede tacke, operator < definisati tako da je duz manja, ako je first.y(x) + 0.0001 < second.y(x)
-Tako su tacke koje su na baaas malom rastojanju iste, pogotovo sto je double u pitanju.
-
 Presek ne radi za kolinearne duzi
-
 obrati paznju na redosled kod horiznotalnih duzi, i kod poredjenja i kod ostalih stvari! CEO ALGORITAM PRODJI SAMO ZA TE DUZI

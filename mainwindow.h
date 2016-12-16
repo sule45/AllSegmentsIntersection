@@ -26,6 +26,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_pushButton_5_clicked();
+
 public slots:
     void krajAlgoritma(std::map<Point, std::set<Duz> > v);
 

@@ -5,7 +5,11 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QMessageBox>
-#define EPS 0.0001
+
+#include <cstdlib>
+#include <ctime>
+
+#define EPS 0.0005
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,6 +53,9 @@ void MainWindow::odrediPreseke()
     }
     else{
         ui->widget->pokerniAlgoritam(true);
+        ui->widget->update();
+        ui->gridLayout->update();
+        ui->centralWidget->update();
     }
 //    ui->widget->update();
 //    QCoreApplication::processEvents();
@@ -82,10 +89,14 @@ void MainWindow::on_pushButton_4_clicked()
             if(a == 0 && b == 0 && c == 0 && d == 0)
                 break;
             if(b == d){
-                if(a < c)
+                if(a < c){
                     d += EPS;
-                else
+                    b -= EPS;
+                }
+                else{
                     b += EPS;
+                    d -= EPS;
+                }
             }
             ui->widget->ucitajDuz(a,b,c,d);
             std::cout << a << b << c << d << std::endl;
@@ -113,4 +124,26 @@ void MainWindow::krajAlgoritma(std::map<Point, std::set<Duz>> v)
     daLiJeAlgoritamPokrenut = false;
     ui->pushButton_3->setDisabled(false);
     ui->pushButton_2->setText("Pokreni algoritam");
+}
+
+void MainWindow::on_pushButton_5_clicked() // GENERISI
+{
+    int n = ui->lineEdit_5->text().toInt();
+    if(n == 0)
+        n = 10;
+    srand (time(NULL));
+    for(int i = 0; i < n; i++){
+        int a = rand() % ui->widget->width();
+        int b = rand() % ui->widget->height();
+        int c = rand() % ui->widget->width();
+        int d = rand() % ui->widget->height();
+        if(a == c && b == d){
+            i--;
+            continue;
+        }
+        ui->widget->ucitajDuz(a,b,c,d);
+        ui->widget->update();
+        ui->centralWidget->update();
+        ui->gridLayout->update();
+    }
 }
