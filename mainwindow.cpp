@@ -28,7 +28,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::ucitajDuz()
 {
-    // PROVERITI DA LI SU UNESENA SVA 4 BROJA!
     double a = ui->lineEdit->text().toDouble();
     double b = ui->lineEdit_2->text().toDouble();
     double c = ui->lineEdit_3->text().toDouble();
@@ -89,7 +88,7 @@ void MainWindow::on_pushButton_4_clicked()
             t >> a >> b >> c >> d;
             if(a == 0 && b == 0 && c == 0 && d == 0)
                 break;
-            if(b == d){
+           /* if(b == d){
                 if(a < c){
                     d += EPS;
                     b -= EPS;
@@ -98,9 +97,9 @@ void MainWindow::on_pushButton_4_clicked()
                     b += EPS;
                     d -= EPS;
                 }
-            }
+            }*/
             ui->widget->ucitajDuz(a,b,c,d);
-            std::cout << a << b << c << d << std::endl;
+            //std::cout << a << b << c << d << std::endl;
         };
 
         file.close();
@@ -121,7 +120,7 @@ void MainWindow::krajAlgoritma(std::map<Point, std::set<Duz>, pointComp> v)
 
     ui->textBrowser->setHtml(html);
 
-    std::cout << "kraj MainWindow" << std::endl;
+    //std::cout << "kraj MainWindow" << std::endl;
     daLiJeAlgoritamPokrenut = false;
     ui->pushButton_3->setDisabled(false);
     ui->pushButton_2->setText("Pokreni algoritam");

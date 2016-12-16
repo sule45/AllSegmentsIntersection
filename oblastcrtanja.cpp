@@ -30,7 +30,7 @@ void OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
         spavaj();
         update();
        // repaint();
-        std::cout << "crtam" << std::endl;
+       // std::cout << "crtam" << std::endl;
     }
 }
 
@@ -135,7 +135,7 @@ void OblastCrtanja::spavaj()
 
 void OblastCrtanja::krajAlgoritma()
 {
-    std::cout << "kraj oblastcrtanja" << std::endl;
+    //std::cout << "kraj oblastcrtanja" << std::endl;
     //duzi.clear();
     alg->sweep = 0;
     emit sigKrajAlgoritma(alg->preseci);
