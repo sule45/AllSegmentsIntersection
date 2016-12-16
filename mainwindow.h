@@ -29,7 +29,7 @@ private slots:
     void on_pushButton_5_clicked();
 
 public slots:
-    void krajAlgoritma(std::map<Point, std::set<Duz> > v);
+    void krajAlgoritma(std::map<Point, std::set<Duz>, pointComp > v);
 
 private:
     Ui::MainWindow *ui;

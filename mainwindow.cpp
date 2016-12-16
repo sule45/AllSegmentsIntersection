@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->widget, SIGNAL(sigKrajAlgoritma(std::map<Point,std::set<Duz> >)), this, SLOT(krajAlgoritma(std::map<Point,std::set<Duz> >)));
+    connect(ui->widget, SIGNAL(sigKrajAlgoritma(std::map<Point,std::set<Duz>,pointComp>)), this,
+                          SLOT(krajAlgoritma(   std::map<Point,std::set<Duz>,pointComp>))       );
     daLiJeAlgoritamPokrenut = false;
 }
 
@@ -106,7 +107,7 @@ void MainWindow::on_pushButton_4_clicked()
     }
 }
 
-void MainWindow::krajAlgoritma(std::map<Point, std::set<Duz>> v)
+void MainWindow::krajAlgoritma(std::map<Point, std::set<Duz>, pointComp> v)
 {
     QString html;
     for(auto it = v.begin(); it != v.end(); it++){

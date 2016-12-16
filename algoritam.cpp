@@ -77,11 +77,12 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
         else
             C.push_back(*it);
     }
-//treba zakomentarisati!
+
     status.erase(q,p);
 
-    for(auto it = status.begin(); it != status.end(); it++)
-         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
+//treba zakomentarisati!
+//    for(auto it = status.begin(); it != status.end(); it++)
+//         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
 
     if(U.size() + C.size() + L.size() > 1){//prijavi presek
         preseci[P].insert(L.begin(), L.end());
@@ -93,11 +94,9 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
     status.insert(U.begin(), U.end());
 
 //zakomentarisati
-    std::cout << "posle ubacivanja: " << status.size() << std::endl;
-    for(auto it = status.begin(); it != status.end(); it++)
-         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
-
-
+//    std::cout << "posle ubacivanja: " << status.size() << std::endl;
+//    for(auto it = status.begin(); it != status.end(); it++)
+//         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
 
     if(U.size() + C.size() == 0){
         auto lb = status.lower_bound(d);
@@ -262,5 +261,14 @@ bool Algoritam::poredjenjeDuzi::operator()(const Duz &first, const Duz &second) 
         return true;
     //if (Q.x < P.x - EPS3) return false;
 
+    return false;
+}
+
+
+bool pointComp::operator()(const Point &first, const Point &second) const
+{
+    if(first.y + EPS2 < second.y) return true;
+    if(first.y > second.y + EPS2) return false;
+    if(first.x + EPS2 < second.x) return true;
     return false;
 }
