@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1067</width>
-    <height>1055</height>
+    <width>1078</width>
+    <height>1116</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Svi preseci skupa duzi</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../Users/msuko/Desktop/icon.png</normaloff>../../../../Users/msuko/Desktop/icon.png</iconset>
   </property>
   <property name="layoutDirection">
    <enum>Qt::RightToLeft</enum>
@@ -444,8 +448,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1067</width>
-     <height>25</height>
+     <width>1078</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuPomoc">
