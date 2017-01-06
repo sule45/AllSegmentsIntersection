@@ -29,6 +29,8 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_actionOpis_porgrama_triggered();
+
 public slots:
     void krajAlgoritma(std::map<Point, std::set<Duz>, pointComp > v);
 

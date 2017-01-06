@@ -147,3 +147,19 @@ void MainWindow::on_pushButton_5_clicked() // GENERISI
         ui->gridLayout->update();
     }
 }
+
+void MainWindow::on_actionOpis_porgrama_triggered()
+{
+    QMessageBox msgBox(this);
+    msgBox.setWindowTitle("Opis");
+    msgBox.setTextFormat(Qt::RichText);
+    msgBox.setText("Autor: Milos Sukovic, Matematicki fakultet, Beograd, Januar 2017.<br><br>\
+Cilj ovog programa je da vizualizuje proces izvrsavanja algoritma za pronalazenje svih preseka skupa duzi. \
+Centar koordinatnog sistema se nalazi u gornjem levom uglu prozora, i koordinate su pozitivne po x i y, kako se krecemo \
+desno/dole u odnosu na taj gornji levi ugao. Postoji 3 nacina za unos duzi. \
+Algoritam se odvija korak po korak, na \
+klik odgovarajuceg dugmeta. Algoritam je implementiran kao QThread koji se budi na klik tog dugmeta.<br><br>\
+Vise informacija, i izvorni kod programa, mozete pronaci na \
+<a href=\"https://github.com/sule45/AllSegmentsIntersection\">github stranici</a>.");
+    msgBox.exec();
+}
