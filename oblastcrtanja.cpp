@@ -90,7 +90,7 @@ void OblastCrtanja::iscrtajSliku(QPainter &painter)
         }
     }
     painter.setPen(pen_sweep);
-    painter.drawLine(0, alg->sweep, 800, alg->sweep);
+    painter.drawLine(0, alg->sweep, this->height(), alg->sweep);
 }
 
 void OblastCrtanja::podesiOlovke()
