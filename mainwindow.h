@@ -22,6 +22,7 @@ private slots:
     void ucitajDuz();
     void odrediPreseke();
 
+
     void on_pushButton_3_clicked();
 
     void on_pushButton_4_clicked();

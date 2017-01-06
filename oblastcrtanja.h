@@ -29,6 +29,8 @@ private:
 
 public slots:
     void krajAlgoritma();
+    void iscrtaj1();
+
 signals:
     void sigKrajAlgoritma(std::map<Point, std::set<Duz>, pointComp> preseci);
 
@@ -52,7 +54,7 @@ struct Point {
         return x == other.x && y == other.y;
     }
 
-    bool operator < (const Point& other) const;
+    bool operator< (const Point& other) const;
 };
 
 struct Duz {

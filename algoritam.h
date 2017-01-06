@@ -34,7 +34,7 @@ public:
 
 private:
     void dodajDogadjaj(); //fali implementacija
-    void probudiCrtaca();
+    //void probudiCrtaca();
     void spavaj();
     void run();
     void obradiDogadjaj(const Point& P, std::set<Duz>& U);
@@ -45,6 +45,7 @@ private:
 
 signals:
     void kraj();
+    void crtaj();
 
 private:
     /*tacka je dogadjaj, a uz to su joj pridruzene duzi koje su sa njom

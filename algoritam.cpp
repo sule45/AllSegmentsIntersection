@@ -7,6 +7,7 @@
 //#define EPS1 0.0001
 #define EPS2 0.000001
 #define EPS3 0.00000001
+#define EPS4 0.00000001
 
 double Algoritam::sweep = 0;
 double Algoritam::dogX = 0;
@@ -25,22 +26,19 @@ void Algoritam::run(){
     spavaj();
 
     while (!eventQueue.empty()){
-        //std::cout << "eventQueue.size() = " << eventQueue.size() << std::endl;
         noviSusedi.clear();
         auto p = eventQueue.begin();
-        eventQueue.erase(p);
         sweep = p->first.y;
         dogX = p->first.x;
         obradiDogadjaj(p->first, p->second);
+        eventQueue.erase(p);
 
-        //std::cout << "algoritam odradjuje posao " << std::endl;
-        probudiCrtaca();
-        //std::cout << "uspavljujem algoritam " << std::endl;
+        emit crtaj();
         spavaj();
     }
 
-    std::cout << "kraj, budim spavaca posledji put" << std::endl;
-    probudiCrtaca();
+    //std::cout << "kraj, budim spavaca posledji put" << std::endl;
+    //probudiCrtaca();
     msleep(50); // ovo nije bas pravilno, ali nije ni strasno
     emit kraj();
 }
@@ -80,10 +78,6 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
 
     status.erase(q,p);
 
-//treba zakomentarisati!
-//    for(auto it = status.begin(); it != status.end(); it++)
-//         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
-
     if(U.size() + C.size() + L.size() > 1){//prijavi presek
         preseci[P].insert(L.begin(), L.end());
         preseci[P].insert(C.begin(), C.end());
@@ -92,11 +86,6 @@ void Algoritam::obradiDogadjaj(const Point& P, std::set<Duz>& U){
 
     status.insert(C.begin(), C.end());
     status.insert(U.begin(), U.end());
-
-//zakomentarisati
-//    std::cout << "posle ubacivanja: " << status.size() << std::endl;
-//    for(auto it = status.begin(); it != status.end(); it++)
-//         std::cout << it->A.x << " " << it->A.y << " " << it->B.x << " "<< it->B.y << std::endl;
 
     if(U.size() + C.size() == 0){
         auto lb = status.lower_bound(d);
@@ -166,13 +155,13 @@ void Algoritam::pronadjiNoviDogadjaj(const Point& P,
     }
 }
 
-void Algoritam::probudiCrtaca(){
+/*void Algoritam::probudiCrtaca(){
     if(threadMode){
         mut.lock();
         keyPressed.wakeAll();
         mut.unlock();
     }
-}
+}*/
 
 void Algoritam::spavaj(){
 
@@ -264,11 +253,10 @@ bool Algoritam::poredjenjeDuzi::operator()(const Duz &first, const Duz &second) 
     return false;
 }
 
-
 bool pointComp::operator()(const Point &first, const Point &second) const
 {
-    if(first.y + EPS2 < second.y) return true;
-    if(first.y > second.y + EPS2) return false;
-    if(first.x + EPS2 < second.x) return true;
+    if(first.y + EPS4 < second.y) return true;
+    if(first.y > second.y + EPS4) return false;
+    if(first.x + EPS4 < second.x) return true;
     return false;
 }

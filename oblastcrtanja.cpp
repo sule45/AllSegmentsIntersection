@@ -1,7 +1,7 @@
 #include "oblastcrtanja.h"
 #include <iostream>
 #include <algorithm>
-#define EPS 0  //0.00001
+#define EPS 0//0.001  //0.00001
 
 OblastCrtanja::OblastCrtanja(QWidget *parent) : QWidget(parent)
 {
@@ -22,13 +22,15 @@ void OblastCrtanja::pokerniAlgoritam(bool daLiJeAlgoritamPokrenut)
     if(!daLiJeAlgoritamPokrenut){
         alg = new Algoritam(duzi);
         connect(alg, SIGNAL(kraj()), this, SLOT(krajAlgoritma()));
+        connect(alg, SIGNAL(crtaj()), this, SLOT(iscrtaj1()));
         connect(alg, SIGNAL(finished()), alg, SLOT(deleteLater()));
         alg->start();
     }
     else{
         probudiAlgoritam();
-        spavaj();
-        update();
+        return;
+        //spavaj();
+        //update();
        // repaint();
        // std::cout << "crtam" << std::endl;
     }
@@ -141,7 +143,12 @@ void OblastCrtanja::krajAlgoritma()
     emit sigKrajAlgoritma(alg->preseci);
     delete alg;
     alg = NULL;
-   // paintEvent(NULL);
+    // paintEvent(NULL);
+}
+
+void OblastCrtanja::iscrtaj1()
+{
+    update();
 }
 
 void OblastCrtanja::paintEvent(QPaintEvent *)
