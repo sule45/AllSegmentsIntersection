@@ -72,7 +72,7 @@ void MainWindow::on_pushButton_3_clicked() //ocisti duzi
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    ui->widget->ocistiSve();
+    //ui->widget->ocistiSve();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"));
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly))
